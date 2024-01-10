@@ -1,12 +1,9 @@
-import fs from 'fs'
-// const fs = require("fs");
-const path = require("path");
-const http = require("http");
+import fs from "fs";
+import path from "path";
+import http from "http";
 
-const log = require("../utils/log");
-
-const getIp = require("../utils/getIp");
-const { uploadFile, uploadFiles } = require("./upload");
+import getIp from "./utils/getIp.js";
+import { uploadFile, uploadFiles } from "./upload.js";
 
 const { ipv4 } = getIp();
 
@@ -15,15 +12,15 @@ const memoryCache = {};
 function readFolderToMemory(
   folderPath,
   parentFolder = "",
-  excludedFolders = []
+  excludedFolders: any[] = []
 ) {
   const files = fs.readdirSync(folderPath);
 
-  files.forEach((file) => {
+  files.forEach((file: string) => {
     const filePath = path.join(folderPath, file);
     // => 父文件夹名字/子文件夹名字/子文件名字
     // => article/0_base/index.md
-    const key = path.join(parentFolder, file).replaceAll("\\", "/");
+    const key = path.join(parentFolder, file)?.replace(/\\/g, "/");
 
     // 检查是否在排除列表中
     if (!excludedFolders.includes(file)) {

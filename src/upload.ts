@@ -1,14 +1,16 @@
-const fs = require("fs");
-const path = require("path");
-const multer = require("multer");
+import fs from "fs";
+import path from "path";
+import multer from "multer";
+
+import { log } from "./utils/log.js";
 
 const storage = multer.memoryStorage(); // 存储在内存中
 const upload = multer({ storage });
 
-async function uploadFiles(req, res) {
-  const chalk = (await import("chalk")).default;
+const rootDir = process.cwd();
 
-  const uploadDir = path.join(__dirname, "picture");
+function uploadFiles(req, res) {
+  const uploadDir = path.join(rootDir, "picture");
 
   if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir);
@@ -20,7 +22,7 @@ async function uploadFiles(req, res) {
     if (err) {
       res.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" });
       res.end("文件上传失败");
-      console.error("文件上传失败:", err.message);
+      log(`文件上传失败: ${err.message}`, { type: "error" });
       return;
     }
 
@@ -32,7 +34,7 @@ async function uploadFiles(req, res) {
       const filePath = path.join(uploadDir, fileName);
       fs.writeFile(filePath, file.buffer, "binary", (err) => {
         if (err) {
-          console.error("文件写入失败:", err.message);
+          log(`文件写入失败: ${err.message}`, { type: "error" });
           res.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" });
           res.end("文件写入失败");
           return;
@@ -40,10 +42,10 @@ async function uploadFiles(req, res) {
 
         i += 1;
 
-        console.log(`${fileName} 上传成功`);
+        log(`${fileName} 上传成功`);
 
         if (i === filesLength) {
-          console.log(chalk.green(`所有文件上传成功, 总个数为: ${i}`));
+          log(`所有文件上传成功, 总个数为: ${i}`, { type: "success" });
           res.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
           res.end("文件上传成功");
         }
@@ -53,7 +55,7 @@ async function uploadFiles(req, res) {
 }
 
 function uploadFile(req, res) {
-  const uploadDir = path.join(__dirname, "picture");
+  const uploadDir = path.join(rootDir, "picture");
 
   if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir);
@@ -65,7 +67,7 @@ function uploadFile(req, res) {
     if (err) {
       res.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" });
       res.end("文件上传失败");
-      console.error("文件上传失败:", err.message);
+      log(`文件上传失败: ${err.message}`, { type: "error" });
       return;
     }
 
@@ -75,20 +77,17 @@ function uploadFile(req, res) {
 
     fs.writeFile(filePath, req.file.buffer, "binary", (err) => {
       if (err) {
-        console.error("文件写入失败:", err.message);
+        log(`文件写入失败: ${err.message}`, { type: "error" });
         res.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" });
         res.end("文件写入失败");
         return;
       }
 
-      console.log(chalk.green(`${fileName} 上传成功`));
+      log(`${fileName} 上传成功`);
       res.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
       res.end(`${fileName} 上传成功`);
     });
   });
 }
 
-module.exports = {
-  uploadFile,
-  uploadFiles,
-};
+export { uploadFile, uploadFiles };

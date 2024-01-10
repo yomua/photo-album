@@ -1,18 +1,20 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "CommonJS", // 使用 CommonJS 模块规范, .ts 文件的 node 就可以使用 import 这类语法，被 ts-node 等库编译
+    "target": "ES6", // 决定了编译后的 js 代码应该符合哪个 ECMAScript 版本的规范; 如果设置的很低版本, 那么编译时会对你的较新的语法进行降级, 而保持功能不变.
+    "module": "ES6", // 用什么方式去编译 ts 文件, 然后将其输出成对应的指定模块的 js 文件
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "importHelpers": true,
     "jsx": "react-jsx",
     "esModuleInterop": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "baseUrl": "./",
-    "strict": false,
+    "outDir": "./lib",
+    "rootDir": "./src",
+    "strict": true,
+    "lib": ["ES6"], // 指定编译器(比如: vscode) 可以访问的 js 的库(或者说语法); 比如允许访问 DOM: lib: ['dom']
     "paths": {
-      "~/*": ["./*"],
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
     },
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
@@ -21,14 +23,7 @@
     "noImplicitAny": false,
     "noImplicitThis": false
   },
-  "include": [
-    "mock/**/*",
-    "src/**/*",
-    "config/**/*",
-    ".umirc.ts",
-    "typings.d.ts",
-    "packages/"
-  ],
+  "include": ["src/**/*"],
   "exclude": [
     "node_modules",
     "lib",
