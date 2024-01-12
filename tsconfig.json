@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES6", // 决定了编译后的 js 代码应该符合哪个 ECMAScript 版本的规范; 如果设置的很低版本, 那么编译时会对你的较新的语法进行降级, 而保持功能不变.
-    "module": "ES6", // 用什么方式去编译 ts 文件, 然后将其输出成对应的指定模块的 js 文件
+    "module": "ESNext", // 用什么方式去编译 ts 文件, 然后将其输出成对应的指定模块的 js 文件
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "importHelpers": true,
@@ -9,18 +9,18 @@
     "esModuleInterop": true,
     "sourceMap": false,
     "baseUrl": "./",
-    "outDir": "./lib",
+    "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
     "lib": ["ES6"], // 指定编译器(比如: vscode) 可以访问的 js 的库(或者说语法); 比如允许访问 DOM: lib: ['dom']
     "paths": {
-      "@/*": ["src/*"],
+      "@/*": ["src/*"]
     },
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "removeComments": true,
-    "noImplicitAny": false,
+    "noImplicitAny": false, // 允许隐式 any
     "noImplicitThis": false
   },
   "include": ["src/**/*"],

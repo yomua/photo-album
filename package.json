@@ -5,25 +5,31 @@
   "module": "dist/index.js",
   "description": "云相册",
   "scripts": {
-    "start": "node lib/index.js",
-    "build": "npx tsc && rollup -c",
-    "build:watch": "npx tsc -w",
-    "preinstall": "npx only-allow pnpm",
+    "start": "nodemon",
+    "build": "rollup -c",
+    "preinstall": "only-allow pnpm",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": "https://github.com/yomua/photo-album.git",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@yomua/y-server": "^0.0.2",
+    "@yomua/y-tlog": "^0.0.1",
     "chalk": "^5.3.0",
     "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^11.1.6",
     "@types/node": "^20.10.7",
-    "babel-cli": "^6.26.0",
+    "nodemon": "^3.0.2",
     "only-allow": "1.2.1",
+    "prettier": "^3.1.1",
     "rollup": "^4.9.4",
+    "rollup-plugin-bundleutils": "^2.0.1",
+    "rollup-plugin-delete": "^2.0.0",
+    "tsc-alias": "^1.8.8",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3"
   }

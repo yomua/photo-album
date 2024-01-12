@@ -1,0 +1,10 @@
+{
+  "verbose": true,
+  "execMap": {
+    "ts": "tsc"
+  },
+  "ext": "ts",
+  "watch": ["src"],
+  "ignore": ["node_modules", "dist", "lib"],
+  "exec": "rollup -c && node dist/index.js"
+}

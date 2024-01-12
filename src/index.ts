@@ -1,81 +1,53 @@
-import fs from "fs";
-import path from "path";
-import http from "http";
+import server from '@yomua/y-server'
+import log from './utils/log.js'
 
-import getIp from "./utils/getIp.js";
-import { uploadFile, uploadFiles } from "./upload.js";
+// import chalk from '../node_modules/@yomua/y-tlog/dist/index.js'
+import tlog from '@yomua/y-tlog'
 
-const { ipv4 } = getIp();
+tlog(tlog.success("'__ff'"))
 
-// 缓存到内存的文件内容
-const memoryCache = {};
-function readFolderToMemory(
-  folderPath,
-  parentFolder = "",
-  excludedFolders: any[] = []
-) {
-  const files = fs.readdirSync(folderPath);
+import { RESPONSE_HEADER } from '@/constants.js'
+import { uploadFile, uploadFiles } from '@/utils/upload.js'
+import { setResponseHeader, getIp } from '@/utils/index.js'
 
-  files.forEach((file: string) => {
-    const filePath = path.join(folderPath, file);
-    // => 父文件夹名字/子文件夹名字/子文件名字
-    // => article/0_base/index.md
-    const key = path.join(parentFolder, file)?.replace(/\\/g, "/");
+const { ipv4 } = getIp()
 
-    // 检查是否在排除列表中
-    if (!excludedFolders.includes(file)) {
-      if (fs.statSync(filePath).isDirectory()) {
-        // 如果是文件夹，则递归读取，并传递当前文件夹作为父级
-        readFolderToMemory(filePath, key, excludedFolders);
-      } else {
-        const content = fs.readFileSync(filePath, "utf8");
-        memoryCache[key] = content;
-      }
-    }
-  });
-}
-const readFilePath = "D:\\code\\yomua\\dist";
+const app = server()
 
-// 递归读取指定目录内每个文件的内容
-// readFolderToMemory(readFilePath, "", ["node_modules"]);
+const PORT = 4000
 
-const server = http.createServer((req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://192.168.3.143:8000");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Content-Type, x-requested-with"
-  );
-  res.setHeader("Access-Control-Allow-Credentials", "true");
+app.listener('/upload', (req, res) => {
+  uploadFile(req, res)
+})
 
-  if (req.method === "OPTIONS") {
-    res.writeHead(200); // 处理预检请求，直接返回 200 OK
-    res.end();
+app.listener('/upload_files', (req, res) => {
+  uploadFiles(req, res)
+})
 
-    return;
-  }
+app.cors((_, res) => {
+  setResponseHeader(res, {
+    [RESPONSE_HEADER.ACCESS_CONTROL_ALLOW_ORIGIN]: 'http://192.168.3.143:8000',
+    [RESPONSE_HEADER.ACCESS_CONTROL_ALLOW_METHODS]: 'POST',
+    [RESPONSE_HEADER.ACCESS_CONTROL_ALLOW_HEADERS]: [
+      'X-Requested-With',
+      'Content-Type',
+    ],
+    [RESPONSE_HEADER.ACCESS_CONTROL_ALLOW_CREDENTIALS]: 'true',
+  })
+})
 
-  if (req.url === "/upload") {
-    uploadFile(req, res);
-    return;
-  }
+app.start(PORT, (port: number) => {
+  log(log.success('   <------------------------------------------------>'))
 
-  if (req.url === "/upload_files") {
-    uploadFiles(req, res);
-    return;
-  }
+  log(
+    log.info(log.success('   |'), 'Server is running at '),
+    log.success(`http://localhost:${port}      |`),
+  )
 
-  res.writeHead(404, { "Content-Type": "text/plain" });
-
-  res.end("Not Found");
-});
-
-const PORT = 4000;
-server.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
-  console.log("OR");
-  console.log(`Server is running at http://${ipv4}:${PORT}`);
-});
+  log(
+    log.success('   |'),
+    log.info('Server is running at '),
+    log.success(`http://${ipv4}:${port}  |`),
+  )
+  log(log.success('   <------------------------------------------------>'))
+})

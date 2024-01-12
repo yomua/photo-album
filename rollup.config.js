@@ -1,29 +1,28 @@
-import typescript from "@rollup/plugin-typescript";
-
-const DEFAULT_PLUGINS = [
-  typescript({
-    // 编译 typescript
-    compilerOptions: { lib: ["es5", "es6", "dom"], target: "es5" },
-  }),
-];
-
-const input = "lib/index.js";
+import del from 'rollup-plugin-delete'
+import { terser } from 'rollup-plugin-bundleutils'
+import typescript from '@rollup/plugin-typescript'
 
 export default [
   {
-    input: input,
-    output: {
-      file: `dist/index.js`,
-      format: "es",
-    },
-    plugins: [...DEFAULT_PLUGINS],
+    input: 'src/index.ts',
+    output: [
+      {
+        dir: `dist`,
+        format: 'es',
+        plugins: [
+          // 压缩代码, tree shaking
+          terser(),
+        ],
+      },
+    ],
+    plugins: [
+      // 打包前删除指定文件
+      del({ targets: 'dist/*' }),
+
+      // 解析 ts
+      typescript({
+        compilerOptions: { lib: ['es5', 'es6', 'dom'], target: 'es5' },
+      }),
+    ],
   },
-  {
-    input: input,
-    output: {
-      file: `dist/cjs/index.js`,
-      format: "cjs",
-    },
-    plugins: [...DEFAULT_PLUGINS],
-  },
-];
+]
