@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import multer from 'multer'
 
-import log from './log.js'
+import log from '@yomua/y-tlog'
 
 const storage = multer.memoryStorage() // 存储在内存中
 const upload = multer({ storage })

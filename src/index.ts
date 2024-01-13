@@ -1,10 +1,6 @@
 import server from '@yomua/y-server'
-import log from './utils/log.js'
 
-// import chalk from '../node_modules/@yomua/y-tlog/dist/index.js'
-import tlog from '@yomua/y-tlog'
-
-tlog(tlog.success("'__ff'"))
+import log from '@yomua/y-tlog'
 
 import { RESPONSE_HEADER } from '@/constants.js'
 import { uploadFile, uploadFiles } from '@/utils/upload.js'
