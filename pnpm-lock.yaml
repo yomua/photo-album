@@ -9,8 +9,8 @@ dependencies:
     specifier: ^0.0.2
     version: 0.0.2
   '@yomua/y-tlog':
-    specifier: 0.0.4
-    version: 0.0.4
+    specifier: 0.0.5
+    version: 0.0.5
   multer:
     specifier: ^1.4.5-lts.1
     version: 1.4.5-lts.1
@@ -1452,8 +1452,8 @@ packages:
     resolution: {integrity: sha512-V8BrcNZ5CDL05nQg+SDX3GFlg1tWM/44PWgBaFJmBOcMYnXvBEsA2kcGpswCC8gBf1iL8oHyEXOrMt02TqFPww==}
     dev: false
 
-  /@yomua/y-tlog@0.0.4:
-    resolution: {integrity: sha512-IOuRmwAkqYf22blaCf+E1u45LpqGvcCHC61SoT1zZVDutNvVoP+2pQ4j0S+PeujxBJCvyMNJs1iGWqDwkyyrDw==}
+  /@yomua/y-tlog@0.0.5:
+    resolution: {integrity: sha512-PtlMsG1XB/e3IvHSw8eJEOoChuSLC222crZX1oHkIXgLhsS8jpD6KVQNAyVJ2Xz/HYYQBcEb1rEFdk+pbCfvPw==}
     dependencies:
       chalk: 5.3.0
     dev: false

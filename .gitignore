@@ -2,13 +2,12 @@
 
 # dependencies
 /node_modules
-/npm-debug.log*
-/yarn-error.log
 
 # production
 /dist
 /lib
 /picture
+*.log
 
 # misc
 .DS_Store

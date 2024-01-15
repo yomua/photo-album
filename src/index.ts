@@ -1,6 +1,5 @@
-import server from '@yomua/y-server'
-
 import log from '@yomua/y-tlog'
+import server from '@yomua/y-server'
 
 import { RESPONSE_HEADER } from '@/constants.js'
 import { uploadFile, uploadFiles } from '@/utils/upload.js'
@@ -32,18 +31,20 @@ app.cors((_, res) => {
   })
 })
 
+const { dye } = log
+
 app.start(PORT, (port: number) => {
-  log(log.success('   <------------------------------------------------>'))
+  log(dye.success('   <------------------------------------------------>'))
 
   log(
-    log.info(log.success('   |'), 'Server is running at '),
-    log.success(`http://localhost:${port}      |`),
+    dye.info(dye.success('   |'), 'Server is running at '),
+    dye.success(`http://localhost:${port}      |`),
   )
 
   log(
-    log.success('   |'),
-    log.info('Server is running at '),
-    log.success(`http://${ipv4}:${port}  |`),
+    dye.success('   |'),
+    dye.info('Server is running at '),
+    dye.success(`http://${ipv4}:${port}  |`),
   )
-  log(log.success('   <------------------------------------------------>'))
+  log(dye.success('   <------------------------------------------------>'))
 })
