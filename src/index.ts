@@ -1,9 +1,9 @@
 import log from '@yomua/y-tlog'
 import server from '@yomua/y-server'
 
-import { RESPONSE_HEADER } from '@/constants.js'
-import { uploadFile, uploadFiles } from '@/utils/upload.js'
-import { setResponseHeader, getIp } from '@/utils/index.js'
+import { RESPONSE_HEADER } from '@/constants'
+import { uploadFile, uploadFiles } from '@/utils/upload'
+import { setResponseHeader, getIp } from '@/utils/index'
 
 const { ipv4 } = getIp()
 

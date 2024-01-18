@@ -3,7 +3,7 @@ import os from 'os'
 import path from 'path'
 import crypto from 'crypto'
 
-import { RESPONSE_HEADER } from '@/constants.js'
+import { RESPONSE_HEADER } from '@/constants'
 
 import type { Response } from './index.d'
 
