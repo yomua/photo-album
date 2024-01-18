@@ -22,10 +22,6 @@
 
   轻便的日志系统, 同时能提供终端日志染色功能.
 
-- [chalk](https://www.npmjs.com/package/chalk)
-
-  用来对终端日志进行染色
-
 - [multer](https://www.npmjs.com/package/multer)
 
   仅处理 multipart/form-data 类型的文件.
@@ -82,7 +78,7 @@
 
 这是因为如果使用 tsc 方式编译 ts 文件, 如果没有特别的配置 (如: tsc-alias),
 
-是不会自动处理没有扩展名, 省略 index.js 的情况
+是不会自动处理没有扩展名 和 省略 index.js 的情况
 
 -> `import utils from '@/utils`,
 
