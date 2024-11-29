@@ -22,7 +22,7 @@ app.listener('/upload_files', (req, res) => {
 app.cors((_, res) => {
   setResponseHeader(res, {
     [RESPONSE_HEADER.ACCESS_CONTROL_ALLOW_ORIGIN]: 'http://192.168.3.143:8000',
-    [RESPONSE_HEADER.ACCESS_CONTROL_ALLOW_METHODS]: 'POST',
+    [RESPONSE_HEADER.ACCESS_CONTROL_ALLOW_METHODS]: ['POST', 'PUT'],
     [RESPONSE_HEADER.ACCESS_CONTROL_ALLOW_HEADERS]: [
       'X-Requested-With',
       'Content-Type',
